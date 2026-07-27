@@ -1,1 +1,377 @@
+<!doctype html>
+<html lang="ja" data-bs-theme="auto">
+  <head><script src="assets/js/color-modes.js"></script>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.112.5">
+    <title>乙女座商店街</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    
+
+    
+
+<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+
+    
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="check2" viewBox="0 0 16 16">
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+      </symbol>
+      <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+      </symbol>
+      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+      </symbol>
+      <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+      </symbol>
+    </svg>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+              id="bd-theme"
+              type="button"
+              aria-expanded="false"
+              data-bs-toggle="dropdown"
+              aria-label="Toggle theme (auto)">
+        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
+        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+        <li>
+          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+            Light
+            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
+            Dark
+            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
+            Auto
+            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    
+<header data-bs-theme="dark">
+  <div class="collapse text-bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4>乙女座商店街について</h4>
+          <p class="text-body-secondary">乙女座商店街は、TRPGシナリオを中心に提供する個人サークルです。<br>非公式であるため、公式とは一切関係はありません。</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4>Contact</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://x.com/otome_shower" class="text-white">Twitter</a></li>
+            <li><a href="https://otometrpg.booth.pm/" class="text-white">Booth</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand d-flex align-items-center">
+        <img src="image/icon.png" alt="" width="30" height="24" class="rounded-circle">
+        <strong>乙女座商店街</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <article class="col-lg-8 col-md-10">
+
+        <!-- 記事上部 -->
+        <header class="mb-5">
+          <p class="text-body-secondary mb-2">
+            2026年7月27日
+          </p>
+
+          <h1 class="display-5 fw-bold">
+            WebサイトをGitHub Pagesで公開しました
+          </h1>
+
+          <p class="lead text-body-secondary mt-3">
+            Bootstrapを使用して制作した「乙女座商店街」のWebサイトを、
+            GitHub Pagesで公開しました。
+          </p>
+
+          <div class="mt-3">
+            <span class="badge text-bg-primary">HTML</span>
+            <span class="badge text-bg-primary">CSS</span>
+            <span class="badge text-bg-primary">Bootstrap</span>
+            <span class="badge text-bg-secondary">GitHub Pages</span>
+          </div>
+        </header>
+
+        <!-- メイン画像 -->
+        <figure class="mb-5">
+          <img
+            src="../image/web-site-top.png"
+            class="img-fluid rounded"
+            alt="乙女座商店街Webサイトのトップページ"
+          >
+
+          <figcaption class="text-body-secondary small mt-2">
+            制作したWebサイト「乙女座商店街」のトップページ
+          </figcaption>
+        </figure>
+
+        <!-- 概要 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            制作概要
+          </h2>
+
+          <p class="lh-lg">
+            今回、Bootstrapを使用したWebサイト制作の課題として、
+            TRPGシナリオや個人開発の記録を紹介するWebサイトを制作しました。
+            サイト名は「乙女座商店街」とし、自作したTRPGシナリオの紹介を
+            中心とした構成にしています。
+          </p>
+
+          <p class="lh-lg">
+            制作したサイトはGitHubへアップロードし、
+            GitHub Pagesを利用してインターネット上に公開しました。
+          </p>
+        </section>
+
+        <!-- サイトの内容 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            Webサイトの構成
+          </h2>
+
+          <p class="lh-lg">
+            Webサイトは、主に次のページから構成されています。
+          </p>
+
+          <ul class="lh-lg">
+            <li>サイトの概要を紹介するホームページ</li>
+            <li>TRPGシステムごとのシナリオ一覧ページ</li>
+            <li>シナリオごとの詳細ページ</li>
+            <li>制作したアプリケーションを紹介する個人開発ページ</li>
+            <li>制作過程を記録する開発ブログ</li>
+          </ul>
+
+          <p class="lh-lg">
+            シナリオは「クトゥルフ神話TRPG第6版」と
+            「エモクロアTRPG」に分け、目的のシナリオを探しやすいようにしました。
+          </p>
+        </section>
+
+        <!-- 使用技術 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            使用した技術
+          </h2>
+
+          <dl class="row mt-4">
+            <dt class="col-sm-4">HTML</dt>
+            <dd class="col-sm-8">
+              ページの文章や画像、リンクなどの構造を作成しました。
+            </dd>
+
+            <dt class="col-sm-4">CSS</dt>
+            <dd class="col-sm-8">
+              ページの余白や画像サイズ、ホバー時の表示などを調整しました。
+            </dd>
+
+            <dt class="col-sm-4">Bootstrap</dt>
+            <dd class="col-sm-8">
+              ナビゲーション、ボタン、モーダル、グリッドなどに使用しました。
+            </dd>
+
+            <dt class="col-sm-4">Leaflet</dt>
+            <dd class="col-sm-8">
+              Access欄に地図を表示するために使用しました。
+            </dd>
+
+            <dt class="col-sm-4">GitHub Pages</dt>
+            <dd class="col-sm-8">
+              作成した静的Webサイトの公開に使用しました。
+            </dd>
+          </dl>
+        </section>
+
+        <!-- 工夫した点 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            工夫した点
+          </h2>
+
+          <h3 class="h5 mt-4">
+            シナリオをシステム別に整理
+          </h3>
+
+          <p class="lh-lg">
+            シナリオを一つのページにまとめるのではなく、
+            TRPGシステムごとに一覧ページを分けました。
+            ホーム画面の「シナリオを見る」にカーソルを合わせると、
+            システムを選択できるようにしています。
+          </p>
+
+          <h3 class="h5 mt-4">
+            Bootstrapによるレスポンシブ対応
+          </h3>
+
+          <p class="lh-lg">
+            Bootstrapのグリッドシステムを使用し、
+            パソコンでは横並び、画面幅が狭い場合は縦並びになるようにしました。
+          </p>
+
+          <h3 class="h5 mt-4">
+            CSSの共通化
+          </h3>
+
+          <p class="lh-lg">
+            各HTMLに記述していたCSSを外部の
+            <code>style.css</code>へ移動しました。
+            これにより、複数ページのデザインを一括で変更できるようにしました。
+          </p>
+        </section>
+
+        <!-- 公開方法 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            GitHub Pagesでの公開
+          </h2>
+
+          <p class="lh-lg">
+            作成したHTML、CSS、画像などのファイルをGitHubのリポジトリへ
+            アップロードしました。その後、リポジトリのPages設定から
+            公開するブランチとフォルダを指定しました。
+          </p>
+
+          <ol class="lh-lg">
+            <li>GitHubにリポジトリを作成する</li>
+            <li>Webサイトのファイルをアップロードする</li>
+            <li>SettingsからPagesを開く</li>
+            <li>公開元のブランチとフォルダを選択する</li>
+            <li>発行されたURLから表示を確認する</li>
+          </ol>
+
+          <p class="lh-lg">
+            公開フォルダの先頭に
+            <code>index.html</code>を配置することで、
+            サイトのトップページとして表示されます。
+          </p>
+        </section>
+
+        <!-- 苦労した点 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            苦労した点
+          </h2>
+
+          <p class="lh-lg">
+            最も苦労したのは、HTMLファイルや画像ファイルの相対パスです。
+            ローカル環境では表示されていても、GitHub Pagesへ公開すると
+            画像やCSSが表示されないことがありました。
+          </p>
+
+          <p class="lh-lg">
+            パソコン内の絶対パスではなく、各HTMLファイルから見た
+            相対パスへ変更することで解決しました。
+          </p>
+
+          <pre class="bg-body-tertiary border rounded p-3"><code>&lt;img src="../image/stargazers-トレーラー.png"&gt;</code></pre>
+        </section>
+
+        <!-- 今後 -->
+        <section class="mb-5">
+          <h2 class="h3 border-bottom pb-2">
+            今後追加したい機能
+          </h2>
+
+          <p class="lh-lg">
+            現在はシナリオ紹介と開発記録を中心としたサイトですが、
+            今後は次のような機能を追加したいと考えています。
+          </p>
+
+          <ul class="lh-lg">
+            <li>各シナリオの詳細ページの充実</li>
+            <li>開発記録の記事追加</li>
+            <li>シナリオの検索・絞り込み機能</li>
+            <li>スマートフォン表示の改善</li>
+            <li>制作したWebアプリケーションのデモ公開</li>
+          </ul>
+        </section>
+
+        <!-- リンク -->
+        <section class="border-top pt-4">
+          <h2 class="h4">
+            関連リンク
+          </h2>
+
+          <div class="d-flex gap-2 flex-wrap mt-3">
+            <a
+              href="公開したサイトのURL"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              公開サイトを見る
+            </a>
+
+            <a
+              href="GitHubリポジトリのURL"
+              class="btn btn-outline-dark"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHubを見る
+            </a>
+
+            <a
+              href="../development.html"
+              class="btn btn-outline-secondary"
+            >
+              開発記録一覧へ戻る
+            </a>
+          </div>
+        </section>
+
+      </article>
+    </div>
+  </div>
+</main>
+<footer class="text-body-secondary py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#">Back to top</a>
+    </p>
+  </div>
+</footer>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+</html>
